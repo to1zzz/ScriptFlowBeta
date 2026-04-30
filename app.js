@@ -6,47 +6,45 @@ let currentScene = null;
 
 /* NAV */
 
-function goHome() {
-  show("home");
-}
-
-function goProject() {
-  show("projectScreen");
-}
-
-function show(id) {
-  document.querySelectorAll(".screen, #workspaceScreen")
-    .forEach(e => e.classList.add("hidden"));
-
+function show(id){
+  document.querySelectorAll("#home,#projectScreen,#workspaceScreen")
+    .forEach(e=>e.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
 
+function goHome(){ show("home"); renderProjects(); }
+function goProject(){ show("projectScreen"); renderBars(); }
+
 /* PROJECTS */
 
-function createProject() {
-  const p = {
-    name: "Project " + (projects.length + 1),
-    workspaces: []
-  };
+function createProject(){
+  let name = prompt("Project name (optional):") || "Project " + (projects.length+1);
 
+  let p = { name, workspaces:[], last:null };
   projects.push(p);
   renderProjects();
 }
 
-function renderProjects() {
-  const el = document.getElementById("projects");
-  el.innerHTML = "";
+function renderProjects(){
+  let el = document.getElementById("projects");
+  el.innerHTML="";
 
-  projects.forEach(p => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerText = p.name;
+  projects.forEach(p=>{
+    let card=document.createElement("div");
+    card.className="card";
+    card.innerText=p.name;
 
-    card.onclick = () => {
-      currentProject = p;
-      document.getElementById("projectTitle").innerText = p.name;
+    card.onclick=()=>{
+      currentProject=p;
+      document.getElementById("projectTitle").innerText=p.name;
       show("projectScreen");
-      renderWorkspaces();
+      renderBars();
+    };
+
+    card.ondblclick=()=>{
+      let n=prompt("Rename:",p.name);
+      if(n) p.name=n;
+      renderProjects();
     };
 
     el.appendChild(card);
@@ -55,69 +53,84 @@ function renderProjects() {
 
 /* WORKSPACES */
 
-function createWorkspace() {
-  const w = {
-    name: "Workspace " + (currentProject.workspaces.length + 1),
-    scenes: []
-  };
+function createWorkspace(){
+  let name = prompt("Workspace name:") || "Workspace " + (currentProject.workspaces.length+1);
 
-  currentProject.workspaces.push(w);
-  renderWorkspaces();
+  currentProject.workspaces.push({
+    name,
+    scenes:[],
+    last:null
+  });
+
+  renderBars();
 }
 
-function renderWorkspaces() {
-  const el = document.getElementById("workspaces");
-  el.innerHTML = "";
+function renderBars(){
+  let el=document.getElementById("workspaceBars");
+  el.innerHTML="";
 
-  currentProject.workspaces.forEach(w => {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerText = w.name;
+  currentProject.workspaces.forEach(w=>{
+    let bar=document.createElement("div");
+    bar.className="bar";
 
-    card.onclick = () => {
-      currentWorkspace = w;
-      document.getElementById("workspaceTitle").innerText = w.name;
+    w.scenes.forEach(s=>{
+      let seg=document.createElement("div");
+
+      if(!s.content) seg.className="seg gray";
+      else seg.className="seg white";
+
+      if(w.last===s) seg.className="seg red";
+
+      bar.appendChild(seg);
+    });
+
+    bar.onclick=()=>{
+      currentWorkspace=w;
+      document.getElementById("workspaceTitle").innerText=w.name;
       show("workspaceScreen");
       renderScenes();
     };
 
-    el.appendChild(card);
+    bar.ondblclick=()=>{
+      let n=prompt("Rename workspace:",w.name);
+      if(n) w.name=n;
+      renderBars();
+    };
+
+    el.appendChild(bar);
   });
 }
 
 /* SCENES */
 
-function addScene() {
-  const s = {
-    title: "Scene " + (currentWorkspace.scenes.length + 1),
-    content: ""
+function addScene(){
+  let s={
+    title:"Scene "+(currentWorkspace.scenes.length+1),
+    content:""
   };
 
   currentWorkspace.scenes.push(s);
-  currentScene = s;
+  currentScene=s;
 
   renderScenes();
   renderEditor();
 }
 
-function renderScenes() {
-  const el = document.getElementById("scenes");
-  el.innerHTML = "";
+function renderScenes(){
+  let el=document.getElementById("scenes");
+  el.innerHTML="";
 
-  currentWorkspace.scenes.forEach(s => {
-    const div = document.createElement("div");
-    div.className = "scene";
-    div.innerText = s.title;
+  currentWorkspace.scenes.forEach(s=>{
+    let div=document.createElement("div");
+    div.className="scene";
+    div.innerText=s.title;
 
-    div.onclick = () => {
-      currentScene = s;
+    div.onclick=()=>{
+      currentScene=s;
+      currentWorkspace.last=s;
       renderScenes();
       renderEditor();
     };
-
-    if (s === currentScene) {
-      div.classList.add("active");
-    }
 
     el.appendChild(div);
   });
@@ -125,20 +138,64 @@ function renderScenes() {
 
 /* EDITOR */
 
-function renderEditor() {
-  const editor = document.getElementById("editor");
+function renderEditor(){
+  let editor=document.getElementById("editor");
 
-  if (!currentScene) {
-    editor.innerText = "Create a scene";
+  if(!currentScene){
+    editor.innerText="Create scene";
     return;
   }
 
-  editor.innerText = currentScene.content;
+  editor.innerHTML=currentScene.content;
 
-  editor.oninput = () => {
-    currentScene.content = editor.innerText;
+  editor.oninput=()=>{
+    currentScene.content=editor.innerHTML;
   };
 }
+
+/* TOOLBAR */
+
+let editor=document.getElementById("editor");
+let toolbar=document.getElementById("toolbar");
+
+editor.addEventListener("mouseup",()=>{
+  let sel=window.getSelection();
+  if(sel.toString().length===0){
+    toolbar.classList.add("hidden");
+    return;
+  }
+
+  let r=sel.getRangeAt(0).getBoundingClientRect();
+  toolbar.style.top=r.top-40+"px";
+  toolbar.style.left=r.left+"px";
+  toolbar.classList.remove("hidden");
+});
+
+function wrapEntity(){
+  let sel=window.getSelection();
+  let range=sel.getRangeAt(0);
+
+  let span=document.createElement("span");
+  span.style.background="#264f78";
+
+  range.surroundContents(span);
+  toolbar.classList.add("hidden");
+}
+
+/* RIGHT CLICK */
+
+document.getElementById("scenes").addEventListener("contextmenu",(e)=>{
+  e.preventDefault();
+  let name=prompt("Folder name:");
+  if(!name) return;
+
+  currentWorkspace.scenes.push({
+    title:"📁 "+name,
+    content:""
+  });
+
+  renderScenes();
+});
 
 /* INIT */
 
