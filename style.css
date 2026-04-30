@@ -170,4 +170,17 @@ body {
   height: 100%;
   outline: none;
   white-space: pre-wrap;
+  .seg.gray { background: #333; }
+.seg.white { background: #aaa; }
+.seg.red { background: #ff5f5f; }
+
+.add-inside {
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.add-inside:hover {
+  color: #aaa;
 }
