@@ -8,43 +8,54 @@ body {
 .hidden { display:none; }
 
 /* HOME */
+
 .home-header {
   display:flex;
   align-items:center;
-  gap:10px;
-  margin-bottom:20px;
+  gap:15px;
+  margin-bottom:40px;
 }
 
 .logo {
-  font-size:28px;
+  font-size:40px;
   color:#7aa2ff;
 }
 
 .title {
-  font-size:20px;
+  font-size:26px;
+  font-weight:500;
 }
 
 .grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,200px);
-  gap:15px;
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
 }
 
 .card {
+  width:260px;
+  height:140px;
   background:#2a2a2a;
   padding:20px;
-  border-radius:8px;
+  border-radius:12px;
   cursor:pointer;
+  display:flex;
+  align-items:flex-end;
+  font-size:18px;
 }
 
-.card:hover { background:#333; }
+.card:hover {
+  background:#333;
+}
 
 .main-btn {
-  margin-top:20px;
-  padding:10px;
+  margin-top:30px;
+  padding:12px 18px;
   background:#094771;
   border:none;
   color:white;
+  border-radius:6px;
+  cursor:pointer;
 }
 
 /* PROJECT */
@@ -53,32 +64,38 @@ body {
   display:flex;
   align-items:center;
   gap:10px;
-  margin-bottom:10px;
+  margin-bottom:20px;
 }
 
 .bars-container {
+  width:100%;
   overflow-x:auto;
+  padding:20px 0;
 }
 
 .bars {
   display:flex;
-  gap:10px;
-  padding:10px 0;
+  gap:20px;
 }
 
+/* 🔥 ВАЖНО: теперь это большие блоки */
 .bar {
+  min-width:300px;
+  height:40px;
   display:flex;
-  min-width:150px;
-  height:12px;
+  border-radius:6px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#333;
 }
 
 .seg {
   flex:1;
-  margin-right:2px;
 }
 
-.gray { background:#333; }
-.white { background:#aaa; }
+/* цвета */
+.gray { background:#444; }
+.white { background:#dcdcdc; }
 .red { background:#ff5f5f; }
 
 /* WORKSPACE */
@@ -102,9 +119,9 @@ body {
 }
 
 .topbar {
-  height:35px;
+  height:40px;
   background:#2b2b2b;
-  padding:5px;
+  padding:10px;
 }
 
 .workspace-body {
@@ -114,15 +131,16 @@ body {
 
 /* Explorer */
 .explorer {
-  width:220px;
+  width:240px;
   background:#252526;
   padding:10px;
   overflow-y:auto;
 }
 
 .scene {
-  padding:5px;
+  padding:8px;
   cursor:pointer;
+  border-radius:4px;
 }
 
 .scene.active {
@@ -133,11 +151,10 @@ body {
 .editor-container {
   flex:1;
   position:relative;
-  overflow:hidden;
 }
 
 #editor {
-  padding:20px;
+  padding:25px;
   height:100%;
   overflow:auto;
   outline:none;
