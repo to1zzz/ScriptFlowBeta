@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>ScriptFlow</title>
@@ -7,28 +7,37 @@
 </head>
 <body>
 
-<div id="home" class="screen">
-  <h1>ScriptFlow</h1>
-  <div id="projects"></div>
-  <button onclick="createProject()">+ Новый проект</button>
-</div>
+<div class="app">
 
-<div id="editorScreen" class="screen hidden">
-  <div class="layout">
-    
-    <div class="left">
-      <div id="editor" contenteditable="true"></div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">SF</div>
+    <button onclick="goHome()">🏠</button>
+    <button onclick="addScene()">📄</button>
+    <button onclick="addFolder()">📁</button>
+  </div>
 
-      <div class="toolbar">
-        <button onclick="addScene()">+ сцена</button>
-        <button onclick="addFolder()">+ папка</button>
-        <button onclick="addEntity()">+ сущность</button>
-        <button onclick="goHome()">← назад</button>
-      </div>
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <span id="projectName">No Project</span>
     </div>
 
-    <div class="right">
-      <div id="scenes"></div>
+    <div class="workspace">
+
+      <!-- Explorer -->
+      <div class="explorer">
+        <div class="explorer-title">EXPLORER</div>
+        <div id="scenes"></div>
+      </div>
+
+      <!-- Editor -->
+      <div class="editor-container">
+        <div id="editor" contenteditable="true"></div>
+      </div>
+
     </div>
 
   </div>
