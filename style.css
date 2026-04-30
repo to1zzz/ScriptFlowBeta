@@ -1,78 +1,114 @@
 body {
-  font-family: sans-serif;
   margin: 0;
-  background: #111;
-  color: white;
+  font-family: system-ui, sans-serif;
+  background: #0f1115;
+  color: #e6e6e6;
 }
 
-.screen {
-  padding: 20px;
-}
-
-.hidden {
-  display: none;
-}
-
+/* Layout */
 .layout {
   display: flex;
   height: 100vh;
 }
 
+/* Editor */
 .left {
   flex: 3;
   display: flex;
   flex-direction: column;
-}
-
-.right {
-  flex: 1;
-  background: #1a1a1a;
-  padding: 10px;
-  overflow-y: auto;
+  background: #0f1115;
 }
 
 #editor {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
   outline: none;
   font-size: 16px;
+  line-height: 1.6;
+  background: #0f1115;
+  color: #e6e6e6;
   white-space: pre-wrap;
+  caret-color: #7aa2ff;
 }
 
+/* Toolbar */
 .toolbar {
   padding: 10px;
-  background: #222;
+  background: #151821;
+  border-top: 1px solid #222;
 }
 
 button {
-  margin: 5px;
-}
-
-.scene {
-  padding: 8px;
+  background: #1f2430;
+  border: 1px solid #2a2f3a;
+  color: #ccc;
+  padding: 6px 10px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
+button:hover {
+  background: #2a2f3a;
+}
+
+/* Right panel */
+.right {
+  flex: 1;
+  background: #151821;
+  border-left: 1px solid #222;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* Scenes */
+.scene {
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.scene:hover {
+  background: #1f2430;
+}
+
 .scene.active {
-  background: #444;
+  background: #2a2f3a;
+  color: white;
 }
 
+/* Folder */
 .folder {
-  color: #6aa9ff;
   margin-top: 10px;
+  color: #7aa2ff;
+  font-size: 13px;
+  opacity: 0.9;
 }
 
+/* Project screen */
+#home {
+  background: #0f1115;
+}
+
+/* Project bars */
 .bar {
   display: flex;
-  height: 10px;
-  margin-top: 5px;
+  height: 8px;
+  margin-top: 6px;
 }
 
 .seg {
   flex: 1;
   margin-right: 2px;
+  border-radius: 2px;
 }
 
-.gray { background: #444; }
-.white { background: #ccc; }
-.red { background: red; }
+.gray { background: #2a2f3a; }
+.white { background: #aaa; }
+.red { background: #ff5f5f; }
+
+/* Titles */
+h1 {
+  font-weight: 500;
+  margin-bottom: 20px;
+}
