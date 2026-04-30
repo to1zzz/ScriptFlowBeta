@@ -7,63 +7,47 @@
 </head>
 <body>
 
-<!-- START SCREEN -->
-<div id="startScreen" class="screen center">
-  <div class="start-box" onclick="goProjects()">
-    <div class="logo">SF</div>
-    <div class="title">ScriptFlow</div>
-    <div class="subtitle">Start Writing</div>
-  </div>
+<!-- HOME -->
+<div id="home" class="screen">
+  <div class="header">ScriptFlow</div>
+
+  <div id="projects" class="grid"></div>
+
+  <button class="main-btn" onclick="createProject()">+ New Project</button>
 </div>
 
-<!-- PROJECTS SCREEN -->
-<div id="projectsScreen" class="screen hidden">
-
-  <div class="projects-layout">
-
-    <!-- LEFT: independent projects (tabs style) -->
-    <div class="projects-list">
-      <div class="section-title">PROJECTS</div>
-      <div id="projectTabs"></div>
-      <div class="add" onclick="createProject()">+ New Project</div>
-    </div>
-
-    <!-- RIGHT: workspace preview -->
-    <div class="projects-preview">
-      <div class="section-title">WORKSPACE</div>
-      <div id="projectBars"></div>
-    </div>
-
+<!-- PROJECT -->
+<div id="projectScreen" class="screen hidden">
+  <div class="header">
+    <button onclick="goHome()">←</button>
+    <span id="projectTitle"></span>
   </div>
 
+  <div id="workspaces" class="grid"></div>
+
+  <button class="main-btn" onclick="createWorkspace()">+ New Workspace</button>
 </div>
 
 <!-- WORKSPACE -->
-<div id="workspace" class="hidden">
+<div id="workspaceScreen" class="hidden">
 
   <div class="app">
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <div class="logo-small">SF</div>
-      <button onclick="goProjects()">📁</button>
+      <button onclick="goProject()">←</button>
       <button onclick="addScene()">📄</button>
-      <button onclick="addFolder()">📁+</button>
     </div>
 
     <!-- Main -->
     <div class="main">
 
-      <div class="topbar" id="projectName"></div>
+      <div class="topbar" id="workspaceTitle"></div>
 
       <div class="workspace-body">
 
-        <!-- Explorer -->
-        <div class="explorer">
-          <div id="scenes"></div>
-        </div>
+        <div class="explorer" id="scenes"></div>
 
-        <!-- Editor -->
         <div class="editor">
           <div id="editor" contenteditable="true"></div>
         </div>
