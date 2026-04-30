@@ -7,40 +7,73 @@
 </head>
 <body>
 
-<div class="app">
-
-  <!-- Sidebar -->
-  <div class="sidebar">
+<!-- START SCREEN -->
+<div id="startScreen" class="screen center">
+  <div class="start-box" onclick="goProjects()">
     <div class="logo">SF</div>
-    <button onclick="goHome()">🏠</button>
-    <button onclick="addScene()">📄</button>
-    <button onclick="addFolder()">📁</button>
+    <div class="title">ScriptFlow</div>
+    <div class="subtitle">Start Writing</div>
   </div>
+</div>
 
-  <!-- Main -->
-  <div class="main">
+<!-- PROJECTS SCREEN -->
+<div id="projectsScreen" class="screen hidden">
 
-    <!-- Topbar -->
-    <div class="topbar">
-      <span id="projectName">No Project</span>
+  <div class="projects-layout">
+
+    <!-- LEFT: independent projects (tabs style) -->
+    <div class="projects-list">
+      <div class="section-title">PROJECTS</div>
+      <div id="projectTabs"></div>
+      <div class="add" onclick="createProject()">+ New Project</div>
     </div>
 
-    <div class="workspace">
-
-      <!-- Explorer -->
-      <div class="explorer">
-        <div class="explorer-title">EXPLORER</div>
-        <div id="scenes"></div>
-      </div>
-
-      <!-- Editor -->
-      <div class="editor-container">
-        <div id="editor" contenteditable="true"></div>
-      </div>
-
+    <!-- RIGHT: workspace preview -->
+    <div class="projects-preview">
+      <div class="section-title">WORKSPACE</div>
+      <div id="projectBars"></div>
     </div>
 
   </div>
+
+</div>
+
+<!-- WORKSPACE -->
+<div id="workspace" class="hidden">
+
+  <div class="app">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="logo-small">SF</div>
+      <button onclick="goProjects()">📁</button>
+      <button onclick="addScene()">📄</button>
+      <button onclick="addFolder()">📁+</button>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+
+      <div class="topbar" id="projectName"></div>
+
+      <div class="workspace-body">
+
+        <!-- Explorer -->
+        <div class="explorer">
+          <div id="scenes"></div>
+        </div>
+
+        <!-- Editor -->
+        <div class="editor">
+          <div id="editor" contenteditable="true"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
 <script src="app.js"></script>
