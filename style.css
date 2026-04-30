@@ -1,114 +1,119 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #0f1115;
-  color: #e6e6e6;
+  background: #1e1e1e;
+  color: #ccc;
 }
 
 /* Layout */
-.layout {
+.app {
   display: flex;
   height: 100vh;
 }
 
-/* Editor */
-.left {
-  flex: 3;
+/* Sidebar */
+.sidebar {
+  width: 50px;
+  background: #181818;
   display: flex;
   flex-direction: column;
-  background: #0f1115;
+  align-items: center;
+  padding: 10px 0;
+  border-right: 1px solid #222;
 }
 
-#editor {
-  flex: 1;
-  padding: 24px;
-  outline: none;
-  font-size: 16px;
-  line-height: 1.6;
-  background: #0f1115;
-  color: #e6e6e6;
-  white-space: pre-wrap;
-  caret-color: #7aa2ff;
-}
-
-/* Toolbar */
-.toolbar {
-  padding: 10px;
-  background: #151821;
-  border-top: 1px solid #222;
-}
-
-button {
-  background: #1f2430;
-  border: 1px solid #2a2f3a;
-  color: #ccc;
-  padding: 6px 10px;
-  border-radius: 6px;
+.sidebar button {
+  background: none;
+  border: none;
+  color: #888;
+  margin: 10px 0;
   cursor: pointer;
 }
 
-button:hover {
-  background: #2a2f3a;
+.sidebar button:hover {
+  color: white;
 }
 
-/* Right panel */
-.right {
+.logo {
+  color: #7aa2ff;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Main */
+.main {
   flex: 1;
-  background: #151821;
-  border-left: 1px solid #222;
-  padding: 10px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Scenes */
+/* Topbar */
+.topbar {
+  height: 35px;
+  background: #2b2b2b;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 14px;
+  border-bottom: 1px solid #222;
+}
+
+/* Workspace */
+.workspace {
+  flex: 1;
+  display: flex;
+}
+
+/* Explorer */
+.explorer {
+  width: 220px;
+  background: #252526;
+  border-right: 1px solid #222;
+  padding: 10px;
+}
+
+.explorer-title {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+/* Scene */
 .scene {
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 5px 8px;
   cursor: pointer;
-  color: #aaa;
+  border-radius: 4px;
 }
 
 .scene:hover {
-  background: #1f2430;
+  background: #333;
 }
 
 .scene.active {
-  background: #2a2f3a;
+  background: #094771;
   color: white;
 }
 
 /* Folder */
 .folder {
-  margin-top: 10px;
   color: #7aa2ff;
+  margin-top: 10px;
   font-size: 13px;
-  opacity: 0.9;
 }
 
-/* Project screen */
-#home {
-  background: #0f1115;
-}
-
-/* Project bars */
-.bar {
-  display: flex;
-  height: 8px;
-  margin-top: 6px;
-}
-
-.seg {
+/* Editor */
+.editor-container {
   flex: 1;
-  margin-right: 2px;
-  border-radius: 2px;
+  background: #1e1e1e;
 }
 
-.gray { background: #2a2f3a; }
-.white { background: #aaa; }
-.red { background: #ff5f5f; }
-
-/* Titles */
-h1 {
-  font-weight: 500;
-  margin-bottom: 20px;
+#editor {
+  padding: 20px;
+  height: 100%;
+  outline: none;
+  white-space: pre-wrap;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #d4d4d4;
+  caret-color: #7aa2ff;
 }
