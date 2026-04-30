@@ -1,56 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>ScriptFlow</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="app"></div>
 
-<!-- HOME -->
-<div id="home" class="screen">
-  <div class="home-header">
-    <div class="logo">SF</div>
-    <div class="title">ScriptFlow</div>
-  </div>
-
-  <div id="projects" class="grid"></div>
-
-  <button class="main-btn" onclick="createProject()">+ New Project</button>
-</div>
-
-<!-- PROJECT -->
-<div id="projectScreen" class="screen hidden">
-  <button onclick="goHome()">← Back</button>
-  <h2 id="projectTitle"></h2>
-
-  <div class="bars-container">
-    <div id="workspaceBars" class="bars"></div>
-  </div>
-
-  <button class="main-btn" onclick="createWorkspace()">+ Workspace</button>
-</div>
-
-<!-- WORKSPACE -->
-<div id="workspaceScreen" class="hidden">
-  <div class="app">
-
-    <div class="explorer" id="scenes"></div>
-
-    <div class="main">
-      <div class="topbar">
-        <button onclick="goProject()">←</button>
-        <span id="workspaceTitle"></span>
-      </div>
-
-      <div class="editor-container">
-        <div id="editor" contenteditable="true"></div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
