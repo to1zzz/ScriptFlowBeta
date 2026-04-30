@@ -12,8 +12,15 @@ function show(id){
   document.getElementById(id).classList.remove("hidden");
 }
 
-function goHome(){ show("home"); renderProjects(); }
-function goProject(){ show("projectScreen"); renderBars(); }
+function goHome(){
+  show("home");
+  renderProjects();
+}
+
+function goProject(){
+  show("projectScreen");
+  renderBars();
+}
 
 /* PROJECTS */
 
@@ -40,9 +47,10 @@ function renderProjects(){
       renderBars();
     };
 
+    // ПКМ удалить
     card.oncontextmenu=(e)=>{
       e.preventDefault();
-      if(confirm("Delete project?")){
+      if(confirm(`Delete "${p.name}"?`)){
         projects.splice(i,1);
         renderProjects();
       }
@@ -97,25 +105,6 @@ function renderBars(){
 }
 
 /* TREE */
-
-function addScene(){
-  currentWorkspace.root.push({
-    type:"scene",
-    title:`Scene ${Date.now()}`,
-    content:""
-  });
-  renderTree();
-}
-
-function addFolder(){
-  currentWorkspace.root.push({
-    type:"folder",
-    title:"Folder",
-    open:true,
-    children:[]
-  });
-  renderTree();
-}
 
 function flatten(arr){
   let res=[];
@@ -172,17 +161,17 @@ function renderTree(){
 /* EDITOR */
 
 function renderEditor(){
-  let editor=document.getElementById("editor");
+  const editor = document.getElementById("editor");
 
   if(!currentScene){
-    editor.innerText="Select scene";
+    editor.innerHTML = "";
     return;
   }
 
-  editor.innerHTML=currentScene.content;
+  editor.innerHTML = currentScene.content || "";
 
-  editor.oninput=()=>{
-    currentScene.content=editor.innerHTML;
+  editor.oninput = () => {
+    currentScene.content = editor.innerHTML;
   };
 }
 
