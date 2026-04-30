@@ -1,180 +1,96 @@
-let projects = [];
+import React, { useState } from "react";
+import "./App.css";
 
-let currentProject = null;
-let currentWorkspace = null;
-let currentScene = null;
+export default function App() {
+  const [projects, setProjects] = useState([
+    { id: 1, name: "Project 1", workspaces: [] }
+  ]);
 
-/* NAV */
+  const [currentProject, setCurrentProject] = useState(null);
 
-function show(id){
-  document.querySelectorAll("#home,#projectScreen,#workspaceScreen")
-    .forEach(e=>e.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-}
-
-function goHome(){
-  show("home");
-  renderProjects();
-}
-
-function goProject(){
-  show("projectScreen");
-  renderBars();
-}
-
-/* PROJECTS */
-
-function createProject(){
-  let name = prompt("Project name:") || `Project ${projects.length+1}`;
-
-  projects.push({ name, workspaces:[] });
-  renderProjects();
-}
-
-function renderProjects(){
-  let el=document.getElementById("projects");
-  el.innerHTML="";
-
-  projects.forEach((p,i)=>{
-    let card=document.createElement("div");
-    card.className="card";
-    card.innerText=p.name;
-
-    card.onclick=()=>{
-      currentProject=p;
-      document.getElementById("projectTitle").innerText=p.name;
-      show("projectScreen");
-      renderBars();
-    };
-
-    // ПКМ удалить
-    card.oncontextmenu=(e)=>{
-      e.preventDefault();
-      if(confirm(`Delete "${p.name}"?`)){
-        projects.splice(i,1);
-        renderProjects();
-      }
-    };
-
-    el.appendChild(card);
-  });
-}
-
-/* WORKSPACES */
-
-function createWorkspace(){
-  let name = prompt("Workspace name:") || `Workspace ${currentProject.workspaces.length+1}`;
-
-  currentProject.workspaces.push({
-    name,
-    root:[]
-  });
-
-  renderBars();
-}
-
-function renderBars(){
-  let el=document.getElementById("workspaceBars");
-  el.innerHTML="";
-
-  currentProject.workspaces.forEach(w=>{
-    let bar=document.createElement("div");
-    bar.className="bar";
-
-    let scenes = flatten(w.root);
-    if(scenes.length===0) scenes=[{}];
-
-    scenes.forEach(s=>{
-      let seg=document.createElement("div");
-
-      if(!s.content) seg.className="seg gray";
-      else seg.className="seg white";
-
-      bar.appendChild(seg);
-    });
-
-    bar.onclick=()=>{
-      currentWorkspace=w;
-      document.getElementById("workspaceTitle").innerText=w.name;
-      show("workspaceScreen");
-      renderTree();
-    };
-
-    el.appendChild(bar);
-  });
-}
-
-/* TREE */
-
-function flatten(arr){
-  let res=[];
-  arr.forEach(i=>{
-    if(i.type==="scene") res.push(i);
-    if(i.type==="folder") res.push(...flatten(i.children));
-  });
-  return res;
-}
-
-function renderTree(){
-  let el=document.getElementById("scenes");
-  el.innerHTML="";
-
-  function draw(items,parent){
-    items.forEach(item=>{
-      let div=document.createElement("div");
-      div.className="item";
-
-      if(item.type==="folder"){
-        div.classList.add("folder");
-        div.innerText=(item.open?"📂 ":"📁 ")+item.title;
-
-        div.onclick=()=>{
-          item.open=!item.open;
-          renderTree();
-        };
-
-        parent.appendChild(div);
-
-        if(item.open){
-          let child=document.createElement("div");
-          child.className="children";
-          parent.appendChild(child);
-          draw(item.children, child);
-        }
-
-      } else {
-        div.innerText=item.title;
-
-        div.onclick=()=>{
-          currentScene=item;
-          renderEditor();
-        };
-
-        parent.appendChild(div);
-      }
-    });
-  }
-
-  draw(currentWorkspace.root, el);
-}
-
-/* EDITOR */
-
-function renderEditor(){
-  const editor = document.getElementById("editor");
-
-  if(!currentScene){
-    editor.innerHTML = "";
-    return;
-  }
-
-  editor.innerHTML = currentScene.content || "";
-
-  editor.oninput = () => {
-    currentScene.content = editor.innerHTML;
+  // --- PROJECTS ---
+  const createProject = () => {
+    const name = prompt("Project name") || `Project ${projects.length + 1}`;
+    setProjects([...projects, { id: Date.now(), name, workspaces: [] }]);
   };
+
+  const deleteProject = (id) => {
+    if (window.confirm("Delete project?")) {
+      setProjects(projects.filter(p => p.id !== id));
+    }
+  };
+
+  // --- WORKSPACES ---
+  const createWorkspace = () => {
+    const name =
+      prompt("Workspace name") ||
+      `Workspace ${currentProject.workspaces.length + 1}`;
+
+    const updated = {
+      ...currentProject,
+      workspaces: [
+        ...currentProject.workspaces,
+        { id: Date.now(), name }
+      ]
+    };
+
+    updateProject(updated);
+  };
+
+  const updateProject = (updated) => {
+    setProjects(projects.map(p => (p.id === updated.id ? updated : p)));
+    setCurrentProject(updated);
+  };
+
+  // --- HOME SCREEN ---
+  if (!currentProject) {
+    return (
+      <div className="home">
+        <h1 className="logo">SF ScriptFlow</h1>
+
+        <div className="grid">
+          {projects.map((p) => (
+            <div
+              key={p.id}
+              className="card"
+              onClick={() => setCurrentProject(p)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                deleteProject(p.id);
+              }}
+            >
+              {p.name}
+            </div>
+          ))}
+        </div>
+
+        <button className="btn" onClick={createProject}>
+          + New Project
+        </button>
+      </div>
+    );
+  }
+
+  // --- PROJECT SCREEN ---
+  return (
+    <div className="project">
+      <button className="back" onClick={() => setCurrentProject(null)}>
+        ← Back
+      </button>
+
+      <h2>{currentProject.name}</h2>
+
+      <div className="grid">
+        {currentProject.workspaces.map((w) => (
+          <div key={w.id} className="card">
+            {w.name}
+          </div>
+        ))}
+      </div>
+
+      <button className="btn" onClick={createWorkspace}>
+        + Workspace
+      </button>
+    </div>
+  );
 }
-
-/* INIT */
-
-renderProjects();
