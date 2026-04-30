@@ -1,0 +1,78 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #111;
+  color: white;
+}
+
+.screen {
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+.left {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+}
+
+.right {
+  flex: 1;
+  background: #1a1a1a;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+#editor {
+  flex: 1;
+  padding: 20px;
+  outline: none;
+  font-size: 16px;
+  white-space: pre-wrap;
+}
+
+.toolbar {
+  padding: 10px;
+  background: #222;
+}
+
+button {
+  margin: 5px;
+}
+
+.scene {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.scene.active {
+  background: #444;
+}
+
+.folder {
+  color: #6aa9ff;
+  margin-top: 10px;
+}
+
+.bar {
+  display: flex;
+  height: 10px;
+  margin-top: 5px;
+}
+
+.seg {
+  flex: 1;
+  margin-right: 2px;
+}
+
+.gray { background: #444; }
+.white { background: #ccc; }
+.red { background: red; }
