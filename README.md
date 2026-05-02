@@ -6,7 +6,7 @@ The application is inspired by IDE workflows and file system navigation, aiming 
 
 ---
 
-## ✨ Concept
+## ✨ Concept 
 
 Instead of treating writing as one large text file, ScriptFlow introduces a structured approach:
 
